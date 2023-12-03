@@ -23,7 +23,7 @@ class CheckoutStep1Page {
      */
     ensureOnPage() {
         cy.url().should('eq', 'https://www.saucedemo.com/checkout-step-one.html');
-        const title = 'CHECKOUT: YOUR INFORMATION';
+        const title = 'Checkout: Your Information';
         this.secondaryTitle.should('have.text', title);
     }
 

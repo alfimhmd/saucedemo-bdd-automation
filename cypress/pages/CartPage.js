@@ -1,3 +1,5 @@
+let itemPrices = {};
+
 class CartPage {
     /**
      * Define selectors using getter methods
@@ -27,7 +29,7 @@ class CartPage {
      */
     ensureOnPage() {
         cy.url().should('eq', 'https://www.saucedemo.com/cart.html');
-        const title = 'YOUR CART';
+        const title = 'Your Cart';
         this.secondaryTitle.should('have.text', title);
     }
 
@@ -66,8 +68,25 @@ class CartPage {
     /**
      * Adds an item to the cart
      */
-    addItemToCart(itemId) {
-        cy.get(itemId).click();
+    addItemToCart(itemName) {
+        cy.contains('.inventory_item', itemName).within(() => {
+            cy.get('.inventory_item_price').invoke('text').then(priceText => {
+                // Extract the numeric value from the price text and store it
+                const price = parseFloat(priceText.replace(/^\$/, ''));
+                itemPrices[itemName] = price;
+            });
+            cy.get('.btn_inventory').contains('Add to cart').click();
+        });
+    }
+
+    calculateTotalPrice() {
+        return Object.values(itemPrices).reduce((total, price) => total + price, 0).toFixed(2);
+    }
+
+    checkTotalPrice(expectedPrice) {
+        // This method should locate the element that displays the total price
+        // and assert that its text matches the expectedPrice
+        cy.get('.inventory_item_price').should('have.text', expectedPrice);
     }
 
     /**

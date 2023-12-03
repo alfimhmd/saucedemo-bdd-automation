@@ -23,3 +23,23 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('clickAddToCart', (itemName) => {
+    cy.get('.inventory_item').contains(itemName).parent().parent().find('button').click();
+});
+
+Cypress.Commands.add('clickRemoveFromCart', (itemName) => {
+    cy.get('.inventory_item').contains(itemName).parent().parent().find('button').click();
+});
+
+Cypress.Commands.add('verifyButtonChange', (itemName, expectedText) => {
+    cy.get('.inventory_item').contains(itemName).parent().parent().find('button').should('have.text', expectedText);
+});
+
+Cypress.Commands.add('verifyCartBadge', (expectedCount) => {
+    if (expectedCount === 'not visible') {
+        cy.get('.shopping_cart_badge').should('not.exist');
+    } else {
+        cy.get('.shopping_cart_badge').should('have.text', expectedCount.toString());
+    }
+});

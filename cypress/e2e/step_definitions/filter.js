@@ -5,10 +5,6 @@ import {
   } from "@badeball/cypress-cucumber-preprocessor";
 import InventoryPage from "@pages/InventoryPage";
 
-  Given("I am on the product page", () => {
-    InventoryPage.ensureOnPage()
-  })
-
   Then("I should see a dropdown for product sorting", () => {
     InventoryPage.ensureProductSortDropdownIsVisible()
   })

@@ -75,8 +75,29 @@ class InventoryPage {
             // If sortOrder does not match any expected value, throw an error
             throw new Error(`Invalid sort order: ${sortOrder}`);
         }
-    }    
+    }
 
+    verifyButtonChangeTo(itemName, expectedText) {
+        cy.get('.inventory_item').contains(itemName).parent().parent().find('.btn_inventory').should('have.text', expectedText);
+    }
+
+    convertNameToSelector(name) {
+        // Convert item name to a selector. This method can handle special cases and naming conventions.
+        return name.replace(/ /g, '-').toLowerCase();
+    }
+
+    addItemToCart(itemName) {
+        // Find the item container that includes the specified item name
+        cy.contains('.inventory_item', itemName).within(() => {
+            // Click the 'Add to cart' button within this item's container
+            cy.get('.btn_inventory').contains('Add to cart').click().then($btn => {
+                // Check if the button is disabled after clicking
+                if ($btn.is(':disabled')) {
+                    throw new Error(`Item ${itemName} is not available for adding to the cart.`);
+                }
+            });
+        });
+    }
 
 }
 export default new InventoryPage();
