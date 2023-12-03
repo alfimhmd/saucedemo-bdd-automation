@@ -38,7 +38,21 @@ To get started with these tests:
 
 ## Page Objects
 
-- `CartPage`: Encapsulates the behavior and actions on the cart page of the web application.
+In this repository, POM is implemented for different pages of the web application, represented as classes:
+
+- CartPage: Manages interactions with the cart page, such as adding items, checking item counts, and verifying total prices.
+- InventoryPage: Handles functionalities on the product inventory page, like selecting items.
+- CheckoutStep1Page and CheckoutStep2Page: Represent different steps in the checkout process.
+- CheckoutCompletePage: Represents the final checkout completion page.
+- LoginPage: Used for login page interactions.
+
+Each of these classes is located in the cypress/support directory, under a sub-directory (e.g., @pages). They provide methods that correspond to the actions a user can perform on these pages.
+
+
+### Benefits of POM
+- Maintainability: Changes in the UI can be updated in one place, making the tests more maintainable.
+- Reusability: Common page elements and functionalities are reusable across different test scripts.
+- Readability: Tests become more readable and understandable, focusing on the workflow rather than low-level interactions.
 
 ## Testing Scenarios
 
